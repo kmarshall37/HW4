@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Binary and Cryptography</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css"
+      integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/4ff909f9b3.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <meta charset="utf-8"/>
+    <style>
+     body{
+       background-color: #3e3e3e;
+       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80' width='80' height='80'%3E%3Cg fill='%23cecece' fill-opacity='0.41'%3E%3Cpath d='M0 0h80v80H0V0zm20 20v40h40V20H20zm20 35a15 15 0 1 1 0-30 15 15 0 0 1 0 30z' opacity='.5'%3E%3C/path%3E%3Cpath d='M15 15h50l-5 5H20v40l-5 5V15zm0 50h50V15L80 0v80H0l15-15zm32.07-32.07l3.54-3.54A15 15 0 0 1 29.4 50.6l3.53-3.53a10 10 0 1 0 14.14-14.14zM32.93 47.07a10 10 0 1 1 14.14-14.14L32.93 47.07z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+     }
+
+    .output {
+        color:white;
+        text-shadow: 4px 4px 6px rgba(0,0,0,0.5);
+        background: orange;
+        font-size: 115%;
+      }
+      label{
+        color:white;
+        font-size: 175%;
+      }
+      form{
+        text-align: center;
+        margin: 0 auto;
+        background-color: #343434;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%238d8d8d' fill-opacity='0.4' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");;
+        width: 1000px
+      }
+      h1{
+        font-family: Roboto;
+        color:orange;
+        font-size: 400%;
+        text-shadow: 4px 4px 6px rgba(0,0,0,0.5);
+      }
+      h2{
+        font-family: Roboto;
+        color:white;
+        text-shadow: 4px 4px 6px rgba(0,0,0,0.5);
+      }
+    </style>
+  </head>
+
+  <body>
+
+   <div class="center">
+    <form id="textFields" class="pure-form pure-form-aligned">
+      <fieldset>
+        <br><h1> Homework 4</h1><br>
+
+        <h2> Password </h2><br>
+        <input type="text" name="password" id="password" placeholder="password"/><br><br>
+        <h2> Encrypted message is "this is a secret message" and is Encrypted with AES and the Key Provided in the password field"</h2>
+        <h2> Message encrypted with password is: </h2>
+          <input type="text" name="passOut" id="passOut" placeholder="encrypted message"/><br><br>
+        <button class="pure-button output" id="passwordButton" onclick="click"> Encrypt Message </button><br><br>
+
+
+
+
+        <i class="fas fa-angle-down fa-3x" style="color:orange" ></i><br>
+        <br><br>
+        <label for="BinaryInput">Binary: </label><br>
+        <textarea id="BinaryInput" name="BinaryInput" rows="5" cols="50" style="resize:none;"></textarea><br>
+        <label for="DecimalInput">Decimal:</label><br>
+        <textarea id="DecimalInput" name="DecimalInput" rows="5" cols="50" style="resize:none;"></textarea><br><br>
+        <button class="pure-button output" id="clear" onclick="click"> Clear </button>
+        <button class="pure-button output" id="translateBinary" onclick="click"> Translate To Binary </button>
+        <button class="pure-button output" id="translateDecimal" onclick="click"> Translate To Decimal </button><br><br>
+
+
+        <h2> Encryption Algorithms and Hashes</h2><br>
+        <label for="cryptInput">Plaintext String: </label><br>
+        <textarea id="cryptInput" name="cryptInput" rows="5" cols="50" style="resize:none;"></textarea><br><br><br><br>
+        <label for="aesText"> AES Encrypted Output: </label><br>
+        <input type="text" name="aesText" id="aesText" placeholder="AES Encrypted Text"/><br><br>
+        <label for="sha1Hash"> SHA1 Generated Hash: </label><br>
+        <input type="text" name="sha1Hash" id="sha1Hash" placeholder="SHA1 Digest"/><br>
+        <label for="sha256Hash"> SHA256 Generated Hash: </label><br>
+        <input type="text" name="sha256Hash" id="sha256Hash" placeholder="SHA256 Digest" /><br>
+        <label for="sha3Hash"> SHA3 Generated Hash: </label><br>
+        <input type="text" name="sha3hash" id="sha3Hash" placeholder="SHA3 Digest" /><br>
+
+
+
+
+
+    <button class="pure-button output" id="runCrypt" onclick="click"> Run Crytography Scripts </button>
+
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      </fieldset>
+      </form>
+   </div>
+  <script src="./js/script.js"></script>
+  </body>
+
+
+  </html>
